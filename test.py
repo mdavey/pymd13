@@ -35,8 +35,16 @@ def handle_exit(key, position):
 def volume_control(key, position):
     if key == SamsonMD13.ENCODER_E6:
         windows_volume_setting = int(position/127.0 * 65535)
-        print 'Setting volume to', windows_volume_setting
+        print 'Setting master volume to', windows_volume_setting
         subprocess.call([NIRCMD, 'setsysvolume', str(windows_volume_setting)])
+    elif key == SamsonMD13.ENCODER_E5:
+        foobar_volume = round(position/127.0, 2)
+        print 'Setting foobar volume to', foobar_volume
+        subprocess.call([NIRCMD, 'setappvolume', 'foobar2000.exe', str(foobar_volume)])
+    elif key == SamsonMD13.ENCODER_E3:
+        vent_volume = round(position/127.0, 2)
+        print 'Setting vent volume to', vent_volume
+        subprocess.call([NIRCMD, 'setappvolume', 'ventrilo.exe', str(vent_volume)])
 
 
 md13 = SamsonMD13()
